@@ -6,15 +6,17 @@
 
 **Password** adalah sekumpulan karakter rahasia yang digunakan untuk membuktikan identitas pengguna pada saat proses autentikasi. Sementara itu, **kredensial** dapat berupa paket informasi yang lebih luas, biasanya terdiri dari **identitas** (seperti username atau email) dan **bukti rahasia** (password, token, atau biometrik) yang fungsinya sebagai pengidentifikasi unik.
 
-Dalam konteks penetration testing, serangan terhadap password atau kredensial umumnya berkaitan dengan teknik **brute-force** untuk memperoleh akses ke informasi terenkripsi atau untuk mendapatkan user dengan hak akses yang lebih tinggi (privilege escalation). Oleh karena itu, serangan pada tahap ini sangat krusial, karena jika autentikasi berhasil ditembus, penyerang pada dasarnya telah memperoleh “kunci resmi” untuk masuk ke dalam sistem tersebut.
+Dalam konteks penetration testing, serangan terhadap password atau kredensial umumnya berkaitan dengan teknik **brute-force** untuk memperoleh akses ke informasi terenkripsi atau untuk mendapatkan user dengan hak akses yang lebih tinggi (privilege escalation). Oleh karena itu, serangan pada tahap ini sangat krusial, karena jika autentikasi berhasil ditembus, penyerang pada dasarnya telah memperoleh “kunci resmi” untuk masuk ke dalam sistem tersebut. 
 
-Kredensial umumnya bersifat **RAHASIA**. Namun apakah dengan "rahasia" saja cukup? 
+Kredensial umumnya bersifat **RAHASIA**. Namun apakah dengan "rahasia" saja cukup?
 
 Mari kita bahas lebih lanjut.
 
-## Common Vulnerabilities
+---
 
-Terdapat berbagai jenis kerentanan yang dapat dimanfaatkan oleh penyerang untuk melewati sistem autentikasi atau bahkan mendekripsi suatu file tanpa harus mengetahui password atau kredensial yang sebenarnya:
+## Common Risks
+
+Terdapat berbagai jenis resiko kerentanan yang sering dimanfaatkan oleh penyerang untuk melewati sistem autentikasi atau bahkan mendekripsi suatu file tanpa harus mengetahui password atau kredensial yang sebenarnya:
 
 ### 1. Default Credentials
 
@@ -48,6 +50,8 @@ Disebabkan implementasi sistem yang buruk yang berujung pada **session hijacking
 Sebuah aplikasi web memiliki fitur "Testimoni" yang tidak melakukan sanitasi input, sehingga rentan terhadap ***Stored XSS***. Penyerang mengunggah skrip JavaScript berbahaya yang dirancang untuk mencuri session cookie. Penyerang kemudian menggunakan token tersebut untuk melakukan **session hijacking**, mendapatkan akses penuh ke akun admin tanpa perlu melakukan serangan terhadap password sama sekali.
 :::
 
+---
+
 ## Password Attack
 
 Teknik yang digunakan penyerang untuk mendapatkan akses tidak sah ke akun pengguna adalah dengan cara menebak semua kemungkinan kata sandi. Serangan ini sebenarnya memanfaatkan **kelemahan manusia dalam memilih kata sandi yang mudah diingat namun lemah secara keamanan**. Dalam fase eksploitasi, ini adalah cara paling efektif untuk mendapatkan *initial access* ke dalam infrastruktur target.
@@ -56,19 +60,18 @@ Berikut merupakan beberapa metode umum yang sering digunakan:
 
 1. **Bruteforce Attack**
 
-    Intinya **semua dicobain**, dari `0000` sampai `9999`, atau `aaaaa` sampai `ZZZZZ`. Meskipun secara teoritis dijamin akan berhasil menemukan password apa pun, serangan ini sangat tidak reliabel dan membutuhkan sumber daya komputasi yang sangat besar dan waktu yang sangat lama jika kata sandi target cukup panjang dan kompleks.
-
+   Intinya **semua dicobain**, dari `0000` sampai `9999`, atau `aaaaa` sampai `ZZZZZ`. Meskipun secara teoritis dijamin akan berhasil menemukan password apa pun, serangan ini sangat tidak reliabel dan membutuhkan sumber daya komputasi yang sangat besar dan waktu yang sangat lama jika kata sandi target cukup panjang dan kompleks.
 2. **Dictionary Attack**
 
-    Metode ini dapat dikatakan bruteforce juga, namun alih-alih menghasilkan kombinasi secara iteratif, metode ini menggunakan **daftar kata yang sudah ditentukan sebelumnya (wordlist)**. Daftar ini berisi ribuan hingga jutaan kata yang sering digunakan sebagai password, seperti kata-kata dari kamus, nama populer, hingga hasil kebocoran data (data breach) sebelumnya. Serangan ini jauh lebih efisien dan cepat daripada bruteforce karena hanya mencoba kata-kata dengan probabilitas tinggi.
-
+   Metode ini dapat dikatakan bruteforce juga, namun alih-alih menghasilkan kombinasi secara iteratif, metode ini menggunakan **daftar kata yang sudah ditentukan sebelumnya (wordlist)**. Daftar ini berisi ribuan hingga jutaan kata yang sering digunakan sebagai password, seperti kata-kata dari kamus, nama populer, hingga hasil kebocoran data (data breach) sebelumnya. Serangan ini jauh lebih efisien dan cepat daripada bruteforce karena hanya mencoba kata-kata dengan probabilitas tinggi.
 3. **Rainbow Table Attack**
 
-    Hampir mirip dengan sebelumnya, serangan ini menggunakan **tabel hasil perhitungan hash yang sudah dihitung sebelumnya (pre-computed hash)**. Penyerang tidak perlu menghitung hash saat menyerang. Mereka cukup mencocokkan hash target dengan tabel untuk menemukan password aslinya secara instan. Kelemahannya, serangan ini memerlukan ruang penyimpanan yang sangat besar dan tidak efektif terhadap hash yang menggunakan salt (karakter acak tambahan).
-
+   Hampir mirip dengan sebelumnya, serangan ini menggunakan **tabel hasil perhitungan hash yang sudah dihitung sebelumnya (pre-computed hash)**. Penyerang tidak perlu menghitung hash saat menyerang. Mereka cukup mencocokkan hash target dengan tabel untuk menemukan password aslinya secara instan. Kelemahannya, serangan ini memerlukan ruang penyimpanan yang sangat besar dan tidak efektif terhadap hash yang menggunakan salt (karakter acak tambahan).
 4. **Hybrid Attack**
 
-    Gabungan antara **dictionary attack** dengan **sedikit logika bruteforce**. Penyerang mengambil kata dasar dari wordlist dan menambahkan variasi seperti angka, simbol, atau perubahan kapitalisasi di depan atau di belakang kata tersebut (misalnya: password menjadi P@ssw0rd123). Teknik ini sangat efektif karena merefleksikan kebiasaan umum manusia dalam membuat password yang "terlihat rumit" namun sebenarnya berpola.
+   Gabungan antara **dictionary attack** dengan **sedikit logika bruteforce**. Penyerang mengambil kata dasar dari wordlist dan menambahkan variasi seperti angka, simbol, atau perubahan kapitalisasi di depan atau di belakang kata tersebut (misalnya: password menjadi P@ssw0rd123). Teknik ini sangat efektif karena merefleksikan kebiasaan umum manusia dalam membuat password yang "terlihat rumit" namun sebenarnya berpola.
+
+---
 
 ## Common Credentials
 
@@ -76,11 +79,13 @@ Common Credentials merujuk pada daftar username dan password yang paling sering 
 
 ![SecLists](/miniclass/cyber/assets/penetration-testing/SecLists.png)
 
-Salah satu repositori yang paling terkenal untuk kebutuhan ini adalah [**SecLists**](https://github.com/danielmiessler/seclists). Ini adalah koleksi berbagai jenis daftar kata (wordlists) yang digunakan selama pengujian keamanan, mulai dari daftar username, password, hingga payload untuk web attack. 
+Salah satu repositori yang paling terkenal untuk kebutuhan ini adalah [**SecLists**](https://github.com/danielmiessler/seclists). Ini adalah koleksi berbagai jenis daftar kata (wordlists) yang digunakan selama pengujian keamanan, mulai dari daftar username, password, hingga payload untuk web attack.
+
+---
 
 ## Hash Cracking
 
-Ketika penyerang berhasil menemukan file/data sensitif seperti `/etc/shadow` atau dump database, password tidak serta merta tersimpan dalam teks biasa, melainkan dalam bentuk **hash**. 
+Ketika penyerang berhasil menemukan file/data sensitif seperti `/etc/shadow` atau dump database, password tidak serta merta tersimpan dalam teks biasa, melainkan dalam bentuk **hash**.
 
 ### Apa itu hash?
 
@@ -92,19 +97,16 @@ Ketika penyerang berhasil menemukan file/data sensitif seperti `/etc/shadow` ata
 
 1. **Satu Arah (*One-Way*)**
 
-    Sangat mudah untuk membuat hash dari sebuah input, tetapi secara matematis sangat sulit (hampir mustahil) untuk mengembalikan hash tersebut menjadi input aslinya.
+   Sangat mudah untuk membuat hash dari sebuah input, tetapi secara matematis sangat sulit (hampir mustahil) untuk mengembalikan hash tersebut menjadi input aslinya.
+2. **Deterministik**
 
-2. **Deterministik** 
-
-    Input yang sama akan selalu menghasilkan hash yang sama.
-
+   Input yang sama akan selalu menghasilkan hash yang sama.
 3. **Efek *Avalanche***
 
-    Perubahan sekecil apa pun pada input (misal mengganti satu huruf kecil menjadi huruf besar) akan menghasilkan hash yang benar-benar berbeda.
-
+   Perubahan sekecil apa pun pada input (misal mengganti satu huruf kecil menjadi huruf besar) akan menghasilkan hash yang benar-benar berbeda.
 4. **Tahan Tabrakan (*Collision Resistant*)**
-  
-    Sangat sulit untuk menemukan dua input berbeda yang menghasilkan satu hash yang sama. Walaupun ada kemungkinan kecil, namun selama jenis algoritma yang digunakan tidak usang kemungkinan terjadi collision sangat kecil (nyaris 0%).
+
+   Sangat sulit untuk menemukan dua input berbeda yang menghasilkan satu hash yang sama. Walaupun ada kemungkinan kecil, namun selama jenis algoritma yang digunakan tidak usang kemungkinan terjadi collision sangat kecil (nyaris 0%).
 
 ### Crack The Hash
 
@@ -121,7 +123,7 @@ Berikut adalah tools yang umum digunakan untuk melakukan cracking:
 Ini adalah langkah awal paling mudah untuk mengecek apakah hash tersebut merupakan **common password**. Salah satu tools yang dapat digunakan adalah [CrackStation](https://crackstation.net/).
 
 ::: info Info
-Tidak semua hash ***common passwords*** bisa di-crack menggunakan tools ini. 
+Tidak semua hash ***common passwords*** bisa di-crack menggunakan tools ini.
 
 Tools ini juga tidak bekerja pada ***salted hash***.
 :::
@@ -151,8 +153,9 @@ john --format=sha512crypt --wordlist=path/to/wordlist.txt hash_file.txt
 # Beberapa mode incremental bawaan: digits, alpha, alnum, dll
 john --incremental=digits hash.txt
 ```
+
 ::: tip Tips
-Selain *raw hash*, `john` dapat digunakan untuk crack format yang lain, seperti file terenkripsi atau format kredensial yang lain (misal: zip, rar, ssh/id_rsa, pem, openssl, dsb). 
+Selain *raw hash*, `john` dapat digunakan untuk crack format yang lain, seperti file terenkripsi atau format kredensial yang lain (misal: zip, rar, ssh/id_rsa, pem, openssl, dsb).
 
 Agar melakukan hal tersebut, kita harus menginstall `john` **versi jumbo**.
 
@@ -224,6 +227,8 @@ hashcat -m 500 -a 7 hash.txt ?d?s wordlist.txt
 Hashcat Cheatsheet: [https://www.blackhillsinfosec.com/hashcat-cheatsheet/](https://www.blackhillsinfosec.com/hashcat-cheatsheet/)
 :::
 
+---
+
 ## Langkah Mitigasi
 
 - Ubah *default credential* (jika ada)
@@ -234,5 +239,8 @@ Hashcat Cheatsheet: [https://www.blackhillsinfosec.com/hashcat-cheatsheet/](http
 - Terapkan MFA jika relevan
 - Audit credential reuse jika perlu
 
-## Praktik
-- Lakukan serangan di labs yang telah disediakan
+---
+
+## Hands-on
+
+- Tryhackme: [Brute IT](https://tryhackme.com/room/bruteit)
