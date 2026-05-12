@@ -1,4 +1,4 @@
-# Minggu 1: Introduksi, Etika, dan Metodologi Pentest
+# Chapter 1: Introduksi, Etika, dan Metodologi Pentest
 
 ## Apa Itu Penetration Testing
 

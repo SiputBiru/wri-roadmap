@@ -1,4 +1,5 @@
-# Minggu 4: Enumeration & Attack Surface Mapping
+# Chapter 4: Enumeration & Attack Surface Mapping
+
 ## 1. Pendahuluan
 
 **Enumeration** adalah proses **aktif** untuk mengekstrak informasi secara sistematis dari sistem target — berbeda dari passive recon, pada fase ini kita sudah melakukan interaksi langsung dengan target untuk mendapatkan data yang lebih konkret.
@@ -9,6 +10,7 @@
 - Attack Surface Mapping → menganalisis dan memetakan data tersebut menjadi potensi kelemahan
 
 ---
+
 ## 2. Tujuan Enumeration & Attack Surface Mapping
 
 ### Tujuan Enumeration
@@ -27,19 +29,20 @@
 - Mendokumentasikan infrastruktur target secara visual
 
 ---
+
 ## 3. Konsep Attack Surface
 
 Attack surface adalah **keseluruhan area di mana attacker dapat berinteraksi** dengan sistem target untuk mencoba mengeksploitasinya.
 
 ### Kategori Attack Surface
 
-| Kategori | Contoh |
-| --- | --- |
-| **Network Attack Surface** | Port terbuka, service terekspos, firewall misconfiguration |
-| **Web Attack Surface** | Endpoint API, form input, autentikasi, file upload |
-| **Software Attack Surface** | Versi CMS, plugin, library outdated |
-| **Human Attack Surface** | Akun karyawan, email pattern, social engineering vector |
-| **Cloud Attack Surface** | S3 bucket publik, misconfigured IAM, exposed storage |
+| Kategori                          | Contoh                                                     |
+| --------------------------------- | ---------------------------------------------------------- |
+| **Network Attack Surface**  | Port terbuka, service terekspos, firewall misconfiguration |
+| **Web Attack Surface**      | Endpoint API, form input, autentikasi, file upload         |
+| **Software Attack Surface** | Versi CMS, plugin, library outdated                        |
+| **Human Attack Surface**    | Akun karyawan, email pattern, social engineering vector    |
+| **Cloud Attack Surface**    | S3 bucket publik, misconfigured IAM, exposed storage       |
 
 ### Prinsip Dasar
 
@@ -49,6 +52,7 @@ Semakin spesifik pemetaan → semakin efisien pengujian
 ```
 
 ---
+
 ## 4. Workflow Enumeration & Attack Surface Mapping
 
 > ⚠️ Semua aktivitas pada fase ini adalah **active** — pastikan sudah ada izin tertulis (scope engagement) sebelum memulai.
@@ -86,11 +90,11 @@ PORT     STATE  SERVICE  VERSION
 
 **Tools tambahan untuk network scanning skala besar:**
 
-| Tool | Fungsi | Install |
-| --- | --- | --- |
-| **Masscan** | Port scanning ultra-cepat (internet-scale) | `sudo apt install masscan` |
-| **Rustscan** | Fast port scanner (wrapper Nmap) | `cargo install rustscan` |
-| **Fping** | Host discovery & ping sweep | `sudo apt install fping` |
+| Tool               | Fungsi                                     | Install                      |
+| ------------------ | ------------------------------------------ | ---------------------------- |
+| **Masscan**  | Port scanning ultra-cepat (internet-scale) | `sudo apt install masscan` |
+| **Rustscan** | Fast port scanner (wrapper Nmap)           | `cargo install rustscan`   |
+| **Fping**    | Host discovery & ping sweep                | `sudo apt install fping`   |
 
 ---
 
@@ -180,14 +184,14 @@ onesixtyone -c /usr/share/seclists/Discovery/SNMP/snmp.txt <target>
 
 **Tools Service Enumeration:**
 
-| Tool | Target Service | Perintah Dasar |
-| --- | --- | --- |
-| **Netcat** | Semua port | `nc -v <target> <port>` |
-| **WhatWeb** | HTTP | `whatweb <url>` |
-| **SSLScan** | HTTPS/TLS | `sslscan <target>` |
-| **Enum4linux** | SMB/Samba | `enum4linux -a <target>` |
-| **SNMPWalk** | SNMP | `snmpwalk -v2c -c public <target>` |
-| **Nikto** | HTTP | `nikto -h <url>` |
+| Tool                 | Target Service | Perintah Dasar                       |
+| -------------------- | -------------- | ------------------------------------ |
+| **Netcat**     | Semua port     | `nc -v <target> <port>`            |
+| **WhatWeb**    | HTTP           | `whatweb <url>`                    |
+| **SSLScan**    | HTTPS/TLS      | `sslscan <target>`                 |
+| **Enum4linux** | SMB/Samba      | `enum4linux -a <target>`           |
+| **SNMPWalk**   | SNMP           | `snmpwalk -v2c -c public <target>` |
+| **Nikto**      | HTTP           | `nikto -h <url>`                   |
 
 ---
 
@@ -254,15 +258,15 @@ ffuf -u http://<target>/api/v1/FUZZ \
 
 **Tools Web Enumeration:**
 
-| Tool | Fungsi | Install |
-| --- | --- | --- |
-| **Gobuster** | Directory, DNS, VHost brute force | `sudo apt install gobuster` |
-| **FFuf** | Fast web fuzzer | `sudo apt install ffuf` |
-| **Feroxbuster** | Recursive directory brute force | `sudo apt install feroxbuster` |
-| **Dirb** | Directory brute force (klasik) | `sudo apt install dirb` |
-| **WhatWeb** | Web technology fingerprinting | `sudo apt install whatweb` |
-| **Nikto** | Web vulnerability scanner | `sudo apt install nikto` |
-| **Amass** | Subdomain enumeration | `sudo apt install amass` |
+| Tool                  | Fungsi                            | Install                          |
+| --------------------- | --------------------------------- | -------------------------------- |
+| **Gobuster**    | Directory, DNS, VHost brute force | `sudo apt install gobuster`    |
+| **FFuf**        | Fast web fuzzer                   | `sudo apt install ffuf`        |
+| **Feroxbuster** | Recursive directory brute force   | `sudo apt install feroxbuster` |
+| **Dirb**        | Directory brute force (klasik)    | `sudo apt install dirb`        |
+| **WhatWeb**     | Web technology fingerprinting     | `sudo apt install whatweb`     |
+| **Nikto**       | Web vulnerability scanner         | `sudo apt install nikto`       |
+| **Amass**       | Subdomain enumeration             | `sudo apt install amass`       |
 
 ---
 
@@ -292,13 +296,13 @@ fierce --domain target.com
 
 **Tools DNS Enumeration:**
 
-| Tool | Fungsi |
-| --- | --- |
-| **Dig** | Query DNS manual | 
-| **DNSRecon** | Automated DNS enumeration |
-| **Fierce** | DNS recon & subdomain discovery |
-| **Host** | Simple DNS lookup |
-| **DNSEnum** | Comprehensive DNS info gathering |
+| Tool               | Fungsi                           |
+| ------------------ | -------------------------------- |
+| **Dig**      | Query DNS manual                 |
+| **DNSRecon** | Automated DNS enumeration        |
+| **Fierce**   | DNS recon & subdomain discovery  |
+| **Host**     | Simple DNS lookup                |
+| **DNSEnum**  | Comprehensive DNS info gathering |
 
 ---
 
@@ -344,6 +348,7 @@ shodan host <IP>
 ```
 
 ---
+
 ## 5. Attack Surface Mapping
 
 Setelah data terkumpul melalui enumeration, langkah selanjutnya adalah memetakan seluruh temuan ke dalam attack surface map.
@@ -378,27 +383,28 @@ Attack Surface Map
 
 Gunakan tabel berikut untuk mendokumentasikan setiap entry point:
 
-| Entry Point | Type | Location | Technology | Risk Level | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Port 22/SSH | Network | 192.168.1.10 | OpenSSH 7.4 | High | Versi lama, CVE tersedia |
-| /admin | Web | http://target.com/admin | WordPress | High | Admin panel terekspos |
-| /api/v1/users | API | http://target.com | REST API | Medium | Butuh auth, belum divalidasi |
-| Port 8080 | Network | 192.168.1.10 | Tomcat 9.0 | Medium | Dev server terekspos |
-| dev.target.com | Subdomain | DNS | Unknown | Medium | Subdomain dev terekspos |
+| Entry Point    | Type      | Location                | Technology  | Risk Level | Notes                        |
+| -------------- | --------- | ----------------------- | ----------- | ---------- | ---------------------------- |
+| Port 22/SSH    | Network   | 192.168.1.10            | OpenSSH 7.4 | High       | Versi lama, CVE tersedia     |
+| /admin         | Web       | http://target.com/admin | WordPress   | High       | Admin panel terekspos        |
+| /api/v1/users  | API       | http://target.com       | REST API    | Medium     | Butuh auth, belum divalidasi |
+| Port 8080      | Network   | 192.168.1.10            | Tomcat 9.0  | Medium     | Dev server terekspos         |
+| dev.target.com | Subdomain | DNS                     | Unknown     | Medium     | Subdomain dev terekspos      |
 
 ### 5.3 Risk Level Classification
 
-| Level | Kriteria |
-| --- | --- |
-| **Critical** | Langsung dapat dieksploitasi tanpa autentikasi |
-| **High** | Berpotensi memberikan akses signifikan |
-| **Medium** | Memerlukan kondisi tertentu untuk dieksploitasi |
-| **Low** | Dampak terbatas atau memerlukan banyak prasyarat |
-| **Informational** | Tidak langsung berbahaya namun perlu dicatat |
+| Level                   | Kriteria                                         |
+| ----------------------- | ------------------------------------------------ |
+| **Critical**      | Langsung dapat dieksploitasi tanpa autentikasi   |
+| **High**          | Berpotensi memberikan akses signifikan           |
+| **Medium**        | Memerlukan kondisi tertentu untuk dieksploitasi  |
+| **Low**           | Dampak terbatas atau memerlukan banyak prasyarat |
+| **Informational** | Tidak langsung berbahaya namun perlu dicatat     |
 
 ### 5.4 Entry Point Categories
 
 **Authentication Entry Points:**
+
 - Login form
 - Admin panel
 - API key/token authentication
@@ -406,6 +412,7 @@ Gunakan tabel berikut untuk mendokumentasikan setiap entry point:
 - Password reset mechanism
 
 **Data Input Entry Points:**
+
 - Form fields (search, register, contact)
 - File upload
 - URL parameters
@@ -413,59 +420,61 @@ Gunakan tabel berikut untuk mendokumentasikan setiap entry point:
 - Cookies
 
 **Infrastructure Entry Points:**
+
 - Exposed management ports (SSH, RDP, Telnet)
 - Database ports (MySQL, PostgreSQL, MongoDB)
 - Cache services (Redis, Memcached)
 - Message brokers (RabbitMQ, Kafka)
 
 ---
+
 ## 6. Tools Lengkap
 
 ### 6.1 Network Scanning
 
 > 📌 Referensi lengkap flag dan teknik Nmap tersedia di **Minggu 3 — Cheat Sheet Nmap**. Tabel berikut hanya mencantumkan tools di luar Nmap yang relevan untuk fase enumeration ini.
 
-| Tool | Fungsi Utama | Perintah Contoh |
-| --- | --- | --- |
-| **Masscan** | Ultra-fast port scanner | `masscan -p1-65535 <target> --rate=1000` |
-| **Rustscan** | Fast scanner + Nmap integration | `rustscan -a <target> -- -sC -sV` |
-| **Netcat** | Manual banner grabbing | `nc -v <target> <port>` |
-| **Zmap** | Internet-wide scanning | `zmap -p 80 -o results.txt` |
+| Tool               | Fungsi Utama                    | Perintah Contoh                            |
+| ------------------ | ------------------------------- | ------------------------------------------ |
+| **Masscan**  | Ultra-fast port scanner         | `masscan -p1-65535 <target> --rate=1000` |
+| **Rustscan** | Fast scanner + Nmap integration | `rustscan -a <target> -- -sC -sV`        |
+| **Netcat**   | Manual banner grabbing          | `nc -v <target> <port>`                  |
+| **Zmap**     | Internet-wide scanning          | `zmap -p 80 -o results.txt`              |
 
 ### 6.2 Web Enumeration
 
-| Tool | Fungsi Utama | Perintah Contoh |
-| --- | --- | --- |
-| **Gobuster** | Dir/file/DNS/vhost brute force | `gobuster dir -u <url> -w wordlist.txt` |
-| **FFuf** | Flexible web fuzzer | `ffuf -u <url>/FUZZ -w wordlist.txt` |
-| **Feroxbuster** | Recursive directory brute force | `feroxbuster -u <url>` |
-| **Dirb** | Directory brute force | `dirb <url>` |
-| **Dirsearch** | Web path discovery | `dirsearch -u <url>` |
-| **Nikto** | Web vulnerability scanner | `nikto -h <url>` |
-| **WhatWeb** | Technology fingerprinting | `whatweb -v <url>` |
-| **Wfuzz** | Web fuzzer | `wfuzz -u <url>/FUZZ -w wordlist.txt` |
+| Tool                  | Fungsi Utama                    | Perintah Contoh                           |
+| --------------------- | ------------------------------- | ----------------------------------------- |
+| **Gobuster**    | Dir/file/DNS/vhost brute force  | `gobuster dir -u <url> -w wordlist.txt` |
+| **FFuf**        | Flexible web fuzzer             | `ffuf -u <url>/FUZZ -w wordlist.txt`    |
+| **Feroxbuster** | Recursive directory brute force | `feroxbuster -u <url>`                  |
+| **Dirb**        | Directory brute force           | `dirb <url>`                            |
+| **Dirsearch**   | Web path discovery              | `dirsearch -u <url>`                    |
+| **Nikto**       | Web vulnerability scanner       | `nikto -h <url>`                        |
+| **WhatWeb**     | Technology fingerprinting       | `whatweb -v <url>`                      |
+| **Wfuzz**       | Web fuzzer                      | `wfuzz -u <url>/FUZZ -w wordlist.txt`   |
 
 ### 6.3 DNS & Subdomain
 
-| Tool | Fungsi Utama | Perintah Contoh |
-| --- | --- | --- |
-| **Amass** | Comprehensive subdomain enum | `amass enum -d target.com` |
-| **DNSRecon** | DNS record enumeration | `dnsrecon -d target.com` |
-| **Fierce** | DNS recon & subdomain | `fierce --domain target.com` |
-| **Dig** | Manual DNS query | `dig ANY target.com` |
-| **Subfinder** | Passive subdomain discovery | `subfinder -d target.com` |
-| **Assetfinder** | Fast asset discovery | `assetfinder target.com` |
+| Tool                  | Fungsi Utama                 | Perintah Contoh                |
+| --------------------- | ---------------------------- | ------------------------------ |
+| **Amass**       | Comprehensive subdomain enum | `amass enum -d target.com`   |
+| **DNSRecon**    | DNS record enumeration       | `dnsrecon -d target.com`     |
+| **Fierce**      | DNS recon & subdomain        | `fierce --domain target.com` |
+| **Dig**         | Manual DNS query             | `dig ANY target.com`         |
+| **Subfinder**   | Passive subdomain discovery  | `subfinder -d target.com`    |
+| **Assetfinder** | Fast asset discovery         | `assetfinder target.com`     |
 
 ### 6.4 Service-Specific
 
-| Tool | Target | Perintah Contoh |
-| --- | --- | --- |
-| **Enum4linux** | SMB/Windows | `enum4linux -a <target>` |
-| **SMBMap** | SMB shares | `smbmap -H <target>` |
-| **SNMPWalk** | SNMP | `snmpwalk -v2c -c public <target>` |
-| **SSLScan** | SSL/TLS | `sslscan <target>` |
-| **TestSSL** | SSL/TLS analysis | `testssl.sh <target>` |
-| **SMTP-user-enum** | SMTP | `smtp-user-enum -M VRFY -U users.txt -t <target>` |
+| Tool                     | Target           | Perintah Contoh                                     |
+| ------------------------ | ---------------- | --------------------------------------------------- |
+| **Enum4linux**     | SMB/Windows      | `enum4linux -a <target>`                          |
+| **SMBMap**         | SMB shares       | `smbmap -H <target>`                              |
+| **SNMPWalk**       | SNMP             | `snmpwalk -v2c -c public <target>`                |
+| **SSLScan**        | SSL/TLS          | `sslscan <target>`                                |
+| **TestSSL**        | SSL/TLS analysis | `testssl.sh <target>`                             |
+| **SMTP-user-enum** | SMTP             | `smtp-user-enum -M VRFY -U users.txt -t <target>` |
 
 ### 6.5 Wordlists
 
@@ -486,6 +495,7 @@ git clone https://github.com/danielmiessler/SecLists
 ```
 
 ---
+
 ## 7. Nmap Scripting Engine (NSE)
 
 > 📌 Pengenalan NSE dan kategori script sudah dibahas di **Minggu 3 — Further Nmap**. Bagian ini fokus pada penggunaan NSE spesifik untuk keperluan enumeration service.
@@ -510,6 +520,7 @@ nmap --script mysql-info,mysql-enum <target>
 ```
 
 ---
+
 ## 8. Kesalahan Umum dalam Enumeration
 
 - **Terlalu agresif di awal** — scan dengan rate tinggi dapat memicu IDS/IPS dan alert tim keamanan target
@@ -521,6 +532,7 @@ nmap --script mysql-info,mysql-enum <target>
 - **Wordlist tidak tepat** — pilih wordlist sesuai teknologi target (WordPress, PHP, Java, dll)
 
 ---
+
 ## 9. Prinsip Penting
 
 **Enumeration = Ketelitian, bukan kecepatan.**
@@ -534,37 +546,38 @@ Beberapa prinsip yang harus selalu diikuti:
 5. **Jaga scope** — jangan keluar dari batas engagement yang telah disepakati
 
 ---
+
 ## 10. Lab TryHackMe
 
 Gunakan lab berikut untuk mempraktikkan materi minggu ini secara langsung:
 
 ### 10.1 Fundamental Enumeration
 
-| Room | Topik | Link | Difficulty |
-| --- | --- | --- | --- |
-| **Network Services** | SMB, Telnet, FTP, NFS enumeration | [tryhackme.com/room/networkservices](https://tryhackme.com/room/networkservices) | Easy |
-| **Network Services 2** | SMTP, MySQL enumeration | [tryhackme.com/room/networkservices2](https://tryhackme.com/room/networkservices2) | Easy |
-| **Nmap** | Nmap fundamentals & NSE | [tryhackme.com/room/furthernmap](https://tryhackme.com/room/furthernmap) | Easy |
-| **Nmap Live Host Discovery** | Host discovery techniques | [tryhackme.com/room/nmaplayerhost](https://tryhackme.com/room/nmaplayerhost) | Easy |
+| Room                               | Topik                             | Link                                                                            | Difficulty |
+| ---------------------------------- | --------------------------------- | ------------------------------------------------------------------------------- | ---------- |
+| **Network Services**         | SMB, Telnet, FTP, NFS enumeration | [tryhackme.com/room/networkservices](https://tryhackme.com/room/networkservices)   | Easy       |
+| **Network Services 2**       | SMTP, MySQL enumeration           | [tryhackme.com/room/networkservices2](https://tryhackme.com/room/networkservices2) | Easy       |
+| **Nmap**                     | Nmap fundamentals & NSE           | [tryhackme.com/room/furthernmap](https://tryhackme.com/room/furthernmap)           | Easy       |
+| **Nmap Live Host Discovery** | Host discovery techniques         | [tryhackme.com/room/nmaplayerhost](https://tryhackme.com/room/nmaplayerhost)       | Easy       |
 
 ### 10.2 Web Enumeration
 
-| Room | Topik | Link | Difficulty |
-| --- | --- | --- | --- |
-| **Web Enumeration** | Gobuster, Nikto, WhatWeb | [tryhackme.com/room/webenumerationv2](https://tryhackme.com/room/webenumerationv2) | Easy |
-| **Content Discovery** | Manual & automated content discovery | [tryhackme.com/room/contentdiscovery](https://tryhackme.com/room/contentdiscovery) | Easy |
-| **Subdomain Enumeration** | Passive & active subdomain discovery | [tryhackme.com/room/subdomainenumeration](https://tryhackme.com/room/subdomainenumeration) | Easy |
-| **DNS in Detail** | DNS records & enumeration | [tryhackme.com/room/dnsindetail](https://tryhackme.com/room/dnsindetail) | Easy |
+| Room                            | Topik                                | Link                                                                                    | Difficulty |
+| ------------------------------- | ------------------------------------ | --------------------------------------------------------------------------------------- | ---------- |
+| **Web Enumeration**       | Gobuster, Nikto, WhatWeb             | [tryhackme.com/room/webenumerationv2](https://tryhackme.com/room/webenumerationv2)         | Easy       |
+| **Content Discovery**     | Manual & automated content discovery | [tryhackme.com/room/contentdiscovery](https://tryhackme.com/room/contentdiscovery)         | Easy       |
+| **Subdomain Enumeration** | Passive & active subdomain discovery | [tryhackme.com/room/subdomainenumeration](https://tryhackme.com/room/subdomainenumeration) | Easy       |
+| **DNS in Detail**         | DNS records & enumeration            | [tryhackme.com/room/dnsindetail](https://tryhackme.com/room/dnsindetail)                   | Easy       |
 
 ### 10.3 Attack Surface & Practical
 
-| Room | Topik | Link | Difficulty |
-| --- | --- | --- | --- |
-| **Passive Reconnaissance** | Kombinasi passive & awal active recon | [tryhackme.com/room/passiverecon](https://tryhackme.com/room/passiverecon) | Easy |
-| **Active Reconnaissance** | Traceroute, Ping, Nmap, Telnet | [tryhackme.com/room/activerecon](https://tryhackme.com/room/activerecon) | Easy |
-| **Bounty Hunter** | Real-world web enumeration practice | [tryhackme.com/room/cowboyhacker](https://tryhackme.com/room/cowboyhacker) | Easy |
-| **Basic Pentesting** | Full enumeration → exploitation flow | [tryhackme.com/room/basicpentestingjt](https://tryhackme.com/room/basicpentestingjt) | Easy |
-| **Lookup** | Enumeration practice end-to-end | [tryhackme.com/room/lookup](https://tryhackme.com/room/lookup) | Easy |
+| Room                             | Topik                                 | Link                                                                              | Difficulty |
+| -------------------------------- | ------------------------------------- | --------------------------------------------------------------------------------- | ---------- |
+| **Passive Reconnaissance** | Kombinasi passive & awal active recon | [tryhackme.com/room/passiverecon](https://tryhackme.com/room/passiverecon)           | Easy       |
+| **Active Reconnaissance**  | Traceroute, Ping, Nmap, Telnet        | [tryhackme.com/room/activerecon](https://tryhackme.com/room/activerecon)             | Easy       |
+| **Bounty Hunter**          | Real-world web enumeration practice   | [tryhackme.com/room/cowboyhacker](https://tryhackme.com/room/cowboyhacker)           | Easy       |
+| **Basic Pentesting**       | Full enumeration → exploitation flow | [tryhackme.com/room/basicpentestingjt](https://tryhackme.com/room/basicpentestingjt) | Easy       |
+| **Lookup**                 | Enumeration practice end-to-end       | [tryhackme.com/room/lookup](https://tryhackme.com/room/lookup)                       | Easy       |
 
 ### 10.4 Urutan Lab yang Disarankan
 

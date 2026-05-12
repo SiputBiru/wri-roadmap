@@ -1,4 +1,4 @@
-# Minggu 2: Passive Reconnaissance & OSINT
+# Chapter 2: Passive Reconnaissance & OSINT
 
 ## 1. Pendahuluan
 
@@ -17,13 +17,13 @@ Fokus utama bukan pada jumlah data, tetapi pada **kualitas informasi dan konteks
 
 ## 2. Passive vs Active Reconnaissance
 
-| Aspek | Passive Recon | Active Recon |
-| --- | --- | --- |
-| Interaksi dengan target | Tidak ada | Ada |
-| Sumber data | Informasi publik | Response sistem target |
-| Tujuan | Membangun konteks & hipotesis | Validasi teknis |
-| Risiko deteksi | Sangat rendah | Lebih tinggi |
-| Contoh | OSINT, metadata, Google dork | Port scanning, fuzzing |
+| Aspek                   | Passive Recon                 | Active Recon           |
+| ----------------------- | ----------------------------- | ---------------------- |
+| Interaksi dengan target | Tidak ada                     | Ada                    |
+| Sumber data             | Informasi publik              | Response sistem target |
+| Tujuan                  | Membangun konteks & hipotesis | Validasi teknis        |
+| Risiko deteksi          | Sangat rendah                 | Lebih tinggi           |
+| Contoh                  | OSINT, metadata, Google dork  | Port scanning, fuzzing |
 
 > Passive recon selalu dilakukan terlebih dahulu sebelum active recon.
 
@@ -46,11 +46,11 @@ Tanpa tahap ini, pengujian akan bersifat acak dan tidak efisien.
 
 Setiap temuan harus memiliki tingkat keyakinan.
 
-| Label | Definisi |
-| --- | --- |
-| **Confirmed** | Didukung bukti langsung |
-| **Likely** | Indikasi kuat namun belum pasti |
-| **Unknown** | Tidak cukup informasi |
+| Label               | Definisi                        |
+| ------------------- | ------------------------------- |
+| **Confirmed** | Didukung bukti langsung         |
+| **Likely**    | Indikasi kuat namun belum pasti |
+| **Unknown**   | Tidak cukup informasi           |
 
 **Prinsip penting:** Jangan pernah menulis asumsi sebagai fakta.
 
@@ -65,15 +65,15 @@ Contoh:
 
 Gunakan format berikut untuk menjaga konsistensi:
 
-| Field | Deskripsi |
-| --- | --- |
-| Target Name | Nama organisasi |
-| Known Domains | Domain terverifikasi |
-| Suspected Subdomains | Subdomain dugaan |
-| Technology Clues | Indikasi teknologi |
-| Email Pattern | Pola email |
-| Source | Sumber informasi |
-| Confidence | Tingkat keyakinan |
+| Field                | Deskripsi            |
+| -------------------- | -------------------- |
+| Target Name          | Nama organisasi      |
+| Known Domains        | Domain terverifikasi |
+| Suspected Subdomains | Subdomain dugaan     |
+| Technology Clues     | Indikasi teknologi   |
+| Email Pattern        | Pola email           |
+| Source               | Sumber informasi     |
+| Confidence           | Tingkat keyakinan    |
 
 ---
 
@@ -242,11 +242,11 @@ exiftool file.pdf
 
 Contoh tabel hasil recon:
 
-| Field | Data | Source | Confidence |
-| --- | --- | --- | --- |
-| Domain | example.com | Website resmi | Confirmed |
-| Subdomain | dev.example.com | crt.sh | Likely |
-| Teknologi | WordPress | HTML source | Likely |
+| Field     | Data            | Source        | Confidence |
+| --------- | --------------- | ------------- | ---------- |
+| Domain    | example.com     | Website resmi | Confirmed  |
+| Subdomain | dev.example.com | crt.sh        | Likely     |
+| Teknologi | WordPress       | HTML source   | Likely     |
 
 ---
 
