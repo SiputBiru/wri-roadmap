@@ -78,6 +78,10 @@ export default [
         link: "/miniclass/backend/laravel/mengenal-eloquent-orm",
       },
       {
+        text: "Cheatsheet Laravel Artisan",
+        link: "/miniclass/backend/laravel/cheatsheet-laravel",
+      },
+      {
         text: "Studi Kasus 1",
         link: "/miniclass/backend/laravel/studikasus/studikasus-01",
       },
