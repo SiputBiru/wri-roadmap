@@ -22,11 +22,17 @@ Jangan buat file manual! Gunakan perintah `make` agar Laravel membuatkan boilerp
 | :--- | :--- |
 | `php artisan make:controller NamaController` | Membuat file controller kosong. |
 | `php artisan make:controller NamaController -r` | Membuat controller lengkap dengan fungsi CRUD dasar (index, create, store, dll). |
+| `php artisan make:controller NamaController` | Membuat Controller. |
+| `php artisan make:controller NamaController --api` | Membuat Controller dengan template API. |
+| `php artisan make:controller NamaController --model=NamaModel` | Membuat Controller dengan membuat Model sekaligus(jika model sudah ada model akan hanya "dikaitkan"). |
+| `php artisan make:controller NamaController --model=NamaModel --resource` | Membuat Controller dengan [template method](https://laravel.com/docs/13.x/controllers#specifying-the-resource-model). |
 | `php artisan make:model NamaModel` | Membuat file Model. (Tips: Nama model gunakan bahasa Inggris dan Singular/Tunggal). |
 | `php artisan make:model NamaModel -m` | Membuat Model sekaligus file Migration-nya. (Sangat disarankan!). |
-| `php artisan make:model NamaModel -mcr` | **Combo Maut!** Membuat Model, Migration, dan Controller Resource sekaligus. |
+| `php artisan make:model NamaModel -mcr` | **Combo Maut!** Membuat Model, Migration, dan controller Resource sekaligus. |
 | `php artisan make:migration create_nama_tabel_table` | Membuat file migration baru untuk membuat tabel di database. |
 | `php artisan make:seeder NamaSeeder` | Membuat file seeder untuk mengisi data awal. |
+
+Lebih lengkapnya bisa lihat di 
 
 ## 🗄️ 3. Database & Migrations
 
