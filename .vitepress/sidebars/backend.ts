@@ -105,4 +105,23 @@ export default [
       },
     ],
   },
+  {
+    text: "Auth (Laravel)",
+    collapsed: false,
+    items: [
+      {
+        text: "Apa itu Authentication",
+        link: "/miniclass/backend/laravel/auth/apa-itu-auth.md",
+      },
+      {
+        text: "Teknologi dalam Auth",
+        link: "/miniclass/backend/laravel/auth/teknologi-auth",
+      },
+      {
+        text: "Authentication di Laravel",
+        link: "/miniclass/backend/laravel/auth/authentication-di-laravel",
+      },
+    ],
+  },
+
 ];
