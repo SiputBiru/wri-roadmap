@@ -118,8 +118,20 @@ export default [
         link: "/miniclass/backend/laravel/auth/teknologi-auth",
       },
       {
-        text: "Authentication di Laravel",
-        link: "/miniclass/backend/laravel/auth/authentication-di-laravel",
+        text: "Laravel dan Auth",
+        link: "/miniclass/backend/laravel/auth/auth-dan-laravel",
+      },
+      {
+        text: "Laravel Sanctum",
+        link: "/miniclass/backend/laravel/auth/howto-sanctum-laravel",
+      },
+      {
+        text: "Laravel Fortify",
+        link: "/miniclass/backend/laravel/auth/howto-fortify-laravel",
+      },
+      {
+        text: "Laravel Passport",
+        link: "/miniclass/backend/laravel/auth/howto-passport-laravel",
       },
     ],
   },
