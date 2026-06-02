@@ -69,7 +69,7 @@ Cara klasik dan masih paling umum untuk aplikasi web monolith.
 
 #### Alur Lengkap
 
-<img src="/miniclass/backend/assets/auth/session-auth.jpg" style="border-radius: 5px;" alt="gambar-logo-laravel" width=640px></img>
+<img src="/miniclass/backend/assets/auth/session-auth.jpg" style="border-radius: 5px;" alt="gambar-sessionauth-laravel" width=640px></img>
 
 #### Bagaimana Database Menyimpan Session?
 
@@ -121,7 +121,7 @@ Solusi untuk mengatasi masalah scaling pada session-based auth. Sangat cocok unt
 
 #### Alur Lengkap (dengan JWT)
 
-<img src="/miniclass/backend/assets/auth/token-auth.jpg" style="border-radius: 5px;" alt="gambar-logo-laravel" width=640px></img>
+<img src="/miniclass/backend/assets/auth/token-auth.jpg" style="border-radius: 5px;" alt="gambar-token-auth-laravel" width=640px></img>
 
 #### Kenapa JWT Tidak Perlu Database?
 

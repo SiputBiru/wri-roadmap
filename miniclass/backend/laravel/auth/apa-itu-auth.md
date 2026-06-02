@@ -14,6 +14,8 @@ Semakin banyak faktor yang digunakan, semakin aman sistem authentication-nya (di
 
 ## Authentication vs Authorization
 
+<img src="/miniclass/backend/assets/auth/authentication_and_authorization.webp" style="border-radius: 5px;" alt="gambar-authentication-vs-authorization" width=640px></img>
+
 Kedua istilah ini sering tertukar, padahal berbeda:
 
 | Authentication | Authorization |
