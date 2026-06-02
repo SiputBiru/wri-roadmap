@@ -4,21 +4,6 @@
 
 ---
 
-## 📋 Daftar Isi
-
-1. [Instalasi Fortify](#instalasi-fortify)
-2. [Konfigurasi Features](#konfigurasi-features)
-3. [Membuat View (Frontend)](#membuat-view-frontend)
-4. [Custom Actions](#custom-actions)
-5. [Custom Authentication Pipeline](#custom-authentication-pipeline)
-6. [Two-Factor Authentication](#two-factor-authentication)
-7. [Passkeys (WebAuthn)](#passkeys-webauthn)
-8. [Fortify + Sanctum (Stack SPA)](#fortify--sanctum-stack-spa)
-9. [Testing Fortify](#testing-fortify)
-10. [Cheatsheet Fortify](#cheatsheet-fortify)
-
----
-
 ## Instalasi Fortify
 
 ```bash
