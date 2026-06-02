@@ -39,7 +39,23 @@ Saat deploy pertama kali, generate keys:
 php artisan passport:keys
 ```
 
+Jika perlu, tentukan path kustom untuk keys:
+
+```php
+// App\Providers\AppServiceProvider.php
+public function boot(): void
+{
+    Passport::loadKeysFrom(__DIR__.'/../secrets/oauth');
+}
+```
+
 Atau simpan keys di environment variables (lebih aman):
+
+```bash
+php artisan vendor:publish --tag=passport-config
+```
+
+Lalu set di `.env`:
 
 ```ini
 PASSPORT_PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----
@@ -321,6 +337,96 @@ use Illuminate\Support\Facades\Schedule;
 Schedule::command('passport:purge')->hourly();
 ```
 
+### Managing Tokens (Dashboard User)
+
+Tampilkan daftar koneksi third-party ke user:
+
+```php
+<?php
+
+use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Date;
+use Laravel\Passport\Token;
+
+$user = User::find($userId);
+
+// Semua token valid milik user
+$tokens = $user->tokens()
+    ->where('revoked', false)
+    ->where('expires_at', '>', Date::now())
+    ->get();
+
+// Koneksi ke third-party OAuth apps (bukan first-party)
+$connections = $tokens->load('client')
+    ->reject(fn (Token $token) => $token->client->firstParty())
+    ->groupBy('client_id')
+    ->map(fn (Collection $tokens) => [
+        'client' => $tokens->first()->client,
+        'scopes' => $tokens->pluck('scopes')->flatten()->unique()->values()->all(),
+        'tokens_count' => $tokens->count(),
+    ])
+    ->values();
+```
+
+### Skip Authorization untuk First-Party Client
+
+Agar first-party client tidak perlu menampilkan halaman persetujuan:
+
+```php
+<?php
+
+namespace App\Models\Passport;
+
+use Illuminate\Contracts\Auth\Authenticatable;
+use Laravel\Passport\Client as BaseClient;
+
+class Client extends BaseClient
+{
+    public function skipsAuthorization(Authenticatable $user, array $scopes): bool
+    {
+        return $this->firstParty();
+    }
+}
+```
+
+### Overriding Default Models
+
+Kustomisasi model Passport (misal tambah relasi ke model lain):
+
+```php
+<?php
+
+use App\Models\Passport\AuthCode;
+use App\Models\Passport\Client;
+use App\Models\Passport\DeviceCode;
+use App\Models\Passport\RefreshToken;
+use App\Models\Passport\Token;
+use Laravel\Passport\Passport;
+
+// Di AppServiceProvider::boot()
+Passport::useTokenModel(Token::class);
+Passport::useRefreshTokenModel(RefreshToken::class);
+Passport::useAuthCodeModel(AuthCode::class);
+Passport::useClientModel(Client::class);
+Passport::useDeviceCodeModel(DeviceCode::class);
+```
+
+### Overriding Routes
+
+Jika perlu kostumasi route Passport:
+
+```php
+<?php
+
+use Laravel\Passport\Passport;
+
+// Di AppServiceProvider::register()
+Passport::ignoreRoutes();
+```
+
+Lalu salin route dari [routes file Passport](https://github.com/laravel/passport/blob/master/routes/web.php) ke `routes/web.php`.
+
 ---
 
 ## Authorization Code Grant dengan PKCE
@@ -452,6 +558,8 @@ Route::get('/orders', function (Request $request) {
 })->middleware(EnsureClientIsResourceOwner::using('servers:read', 'servers:create'));
 ```
 
+> **⚠️ UUID Warning**: OAuth2 server set `sub` claim ke client ID untuk client credentials token. Passport default pakai UUID, jadi tidak bentrok dengan user ID integer. Jika kamu set `Passport::$clientUuids = false`, client credentials token bisa不经意 resolve user yang ID-nya sama dengan client ID.
+
 ---
 
 ## Device Authorization Grant
@@ -508,6 +616,131 @@ do {
 } while (in_array($response->json('error'), ['authorization_pending', 'slow_down']));
 
 return $response->json();
+```
+
+---
+
+## Password Grant
+
+> **⚠️ Sudah tidak direkomendasikan.** Pilih grant type lain seperti [Authorization Code + PKCE](#authorization-code-grant-dengan-pkce) atau [Client Credentials](#client-credentials-grant-machine-to-machine).
+
+Aktifkan password grant di `AppServiceProvider`:
+
+```php
+public function boot(): void
+{
+    Passport::enablePasswordGrant();
+}
+```
+
+### Buat Password Grant Client
+
+```bash
+php artisan passport:client --password
+```
+
+### Request Token
+
+```php
+<?php
+
+use Illuminate\Support\Facades\Http;
+
+$response = Http::asForm()->post('https://passport-app.test/oauth/token', [
+    'grant_type' => 'password',
+    'client_id' => 'your-client-id',
+    'client_secret' => 'your-client-secret',
+    'username' => 'user@example.com',
+    'password' => 'my-password',
+    'scope' => 'user:read orders:create',
+]);
+
+return $response->json();
+```
+
+### Custom Username Field
+
+Ganti field email dengan field lain (misal `username`):
+
+```php
+<?php
+
+namespace App\Models;
+
+use Laravel\Passport\Bridge\Client;
+use Laravel\Passport\Contracts\OAuthenticatable;
+use Laravel\Passport\HasApiTokens;
+
+class User extends Authenticatable implements OAuthenticatable
+{
+    use HasApiTokens;
+
+    public function findForPassport(string $username, Client $client): User
+    {
+        return $this->where('username', $username)->first();
+    }
+}
+```
+
+### Custom Password Validation
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Support\Facades\Hash;
+use Laravel\Passport\Contracts\OAuthenticatable;
+use Laravel\Passport\HasApiTokens;
+
+class User extends Authenticatable implements OAuthenticatable
+{
+    use HasApiTokens;
+
+    public function validateForPassportPasswordGrant(string $password): bool
+    {
+        return Hash::check($password, $this->password);
+    }
+}
+```
+
+---
+
+## Implicit Grant
+
+> **⚠️ Sudah tidak direkomendasikan.** Gunakan [Authorization Code + PKCE](#authorization-code-grant-dengan-pkce) sebagai gantinya.
+
+Aktifkan:
+
+```php
+public function boot(): void
+{
+    Passport::enableImplicitGrant();
+}
+```
+
+Buat client:
+
+```bash
+php artisan passport:client --implicit
+```
+
+Redirect user (token langsung didapat tanpa exchange code):
+
+```php
+Route::get('/redirect', function (Request $request) {
+    $request->session()->put('state', $state = Str::random(40));
+
+    $query = http_build_query([
+        'client_id' => 'your-client-id',
+        'redirect_uri' => 'https://third-party-app.com/callback',
+        'response_type' => 'token',
+        'scope' => 'user:read orders:create',
+        'state' => $state,
+    ]);
+
+    return redirect('https://passport-app.test/oauth/authorize?'.$query);
+});
 ```
 
 ---
@@ -771,6 +1004,36 @@ Tanpa perlu kirim token manual!
 ### CSRF Protection
 
 Pastikan setiap request menyertakan CSRF token. Axios dari starter kit Laravel sudah otomatis mengirim `X-XSRF-TOKEN` dari cookie `XSRF-TOKEN`.
+
+---
+
+## Events
+
+Passport memunculkan events yang bisa kamu listen untuk pruning atau revoke token:
+
+| Event |
+|-------|
+| `Laravel\Passport\Events\AccessTokenCreated` |
+| `Laravel\Passport\Events\AccessTokenRevoked` |
+| `Laravel\Passport\Events\RefreshTokenCreated` |
+
+Contoh listener:
+
+```php
+<?php
+
+namespace App\Listeners;
+
+use Laravel\Passport\Events\AccessTokenCreated;
+
+class RevokeOldTokens
+{
+    public function handle(AccessTokenCreated $event): void
+    {
+        // Revoke token lama saat token baru dibuat
+    }
+}
+```
 
 ---
 
