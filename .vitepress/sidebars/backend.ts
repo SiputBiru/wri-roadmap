@@ -133,6 +133,10 @@ export default [
         text: "Laravel Passport",
         link: "/miniclass/backend/laravel/auth/howto-passport-laravel",
       },
+      {
+        text: "Laravel Socialite",
+        link: "/miniclass/backend/laravel/auth/howto-socialite-laravel",
+      },
     ],
   },
 
