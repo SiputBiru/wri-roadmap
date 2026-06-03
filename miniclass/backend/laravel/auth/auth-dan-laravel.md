@@ -244,6 +244,58 @@ Passport diperlukan jika Anda butuh flow OAuth2 yang lengkap, terutama jika **pi
 
 ---
 
+## Socialite — OAuth Login via Provider Eksternal
+
+### Apa itu Socialite?
+
+**Laravel Socialite** adalah package untuk **OAuth authentication** via provider eksternal — Google, GitHub, Facebook, Apple, Twitter, LinkedIn, GitLab, Bitbucket, dan lainnya. Socialite menangani kerumitan OAuth flow (redirect, callback, token exchange) sehingga kamu tinggal fokus ke logic aplikasi.
+
+### Peran Socialite dalam Auth Laravel
+
+Socialite melengkapi stack authentication Laravel — ia tidak menggantikan Sanctum/Fortify/Passport, tapi bekerja **bersamaan** dengan mereka:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                     STACK AUTH LARAVEL                          │
+│                                                                 │
+│   Sanctum / Fortify / Passport                                  │
+│   (email & password, session, token, 2FA, OAuth2 server)        │
+│         ┼                                                       │
+│   Socialite                                                     │
+│   (login via Google, GitHub, Facebook, Apple, dll)              │
+│                                                                 │
+│   ┌─────────────────────────────────────────────────────────┐   │
+│   │ User bisa login dengan:                                  │   │
+│   │ • Email + password (via Sanctum/Fortify/auth bawaan)     │   │
+│   │ • Google / GitHub / dll   (via Socialite)                │   │
+│   └─────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Konsep Penting Socialite
+
+| Konsep | Penjelasan |
+|--------|-----------|
+| **Provider** | Layanan eksternal yang menyediakan OAuth (Google, GitHub, Facebook, Apple, dll) |
+| **Redirect** | Arahkan user ke halaman login provider (Google/GitHub/dll) |
+| **Callback** | URL yang dipanggil provider setelah user setuju — berisi authorization code |
+| **Social Account** | Tabel pivot yang menghubungkan user Laravel dengan akun provider (`provider` + `provider_id`) |
+| **Stateless** | Mode tanpa session — cocok untuk API / SPA yang handle redirect sendiri |
+
+### Socialite vs Passport — Keduanya OAuth, Tapi Berbeda
+
+| Aspek | Socialite | Passport |
+|-------|-----------|----------|
+| **Arah** | **Client** — aplikasi kamu login via provider lain (Google, GitHub) | **Server** — aplikasi kamu jadi provider OAuth2 untuk aplikasi lain |
+| **Fungsi** | "Login dengan Google/GitHub" | "Bikin API yang bisa diakses aplikasi lain via OAuth2" |
+| **Flow** | Redirect ke provider → callback → login | Aplikasi lain redirect ke kamu → setuju → kasih token |
+
+> **Intinya**: Socialite untuk **login via akun Google/GitHub**. Passport untuk **jadikan aplikasi kamu sebagai server OAuth2** yang bisa dipakai aplikasi lain.
+
+Untuk penjelasan lebih detail tentang konsep OAuth, SSO, dan teknologi authentication secara umum, lihat file [`teknologi-auth.md`](./teknologi-auth.md).
+
+---
+
 ## Perbandingan Sanctum vs Passport
 
 | Aspek | Sanctum | Passport |
@@ -342,6 +394,7 @@ Third-Party App                  Laravel (Passport)
 | API publik untuk third-party | **Passport** (OAuth2 penuh) |
 | Machine-to-machine (internal) | **Passport** (Client Credentials) |
 | Headless auth (tanpa UI) | **Fortify** (bisa ditambah **Sanctum** untuk API) |
+| Login via Google/GitHub/dll | **Socialite** (dipasangkan dengan auth stack manapun) |
 
 ### Arsitektur Umum Berdasarkan Stack
 
@@ -364,4 +417,4 @@ Mobile (PKCE)    ──OAuth2──→ Laravel API (JWT)
 Own SPA (PKCE)   ──OAuth2──→ Laravel API (JWT)
 ```
 
-> **Intinya**: Laravel menyediakan empat pendekatan authentication — **Starter Kits** (session, langsung jadi via `laravel new`), **Sanctum** (hybrid, recommended untuk API modern), **Fortify** (headless auth backend package), dan **Passport** (OAuth2 penuh untuk third-party). Pilih sesuai kebutuhan, dan **default ke Sanctum jika ragu**.
+> **Intinya**: Laravel menyediakan empat pendekatan authentication — **Starter Kits** (session, langsung jadi via `laravel new`), **Sanctum** (hybrid, recommended untuk API modern), **Fortify** (headless auth backend package), dan **Passport** (OAuth2 penuh untuk third-party). Ditambah **Socialite** untuk OAuth login via provider eksternal (Google, GitHub, dll). Pilih sesuai kebutuhan, dan **default ke Sanctum jika ragu**.
